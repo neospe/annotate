@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Annotation: {{ filename }}</title>
+		<style>
+			* { font-size: 20pt; }
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.5/mousetrap.min.js"></script>
+	</head>
+	<body>
+		<center>
+			{{ line_no }} / {{ data_len }}
+
+			<br><br><br>
+
+			<p style="font-size: 30pt; width: 60%;">{{ text }}</p>
+
+			<br><br><br>
+			
+			<form action="" method="post">
+				<div style="display: inline-block; vertical-align: top;">
+					{{ form.layer1.label }}
+					<br>
+					{{ form.layer1(size=2) }}
+				</div>
+				<div style="display: inline-block;">
+					{{ form.layer2.label }}
+					<br>
+					{{ form.layer2(size=5) }}
+				</div>
+				
+				<br><br><br>
+
+				{{ form.tweet_id() }}
+				{{ form.tweet_text() }}
+				{{ form.line_no() }}
+				{{ form.line_orig() }}
+				{{ form.modified() }}
+
+				{{ form.submit_previous() }}
+				{{ form.submit_next() }}
+			</form>
+		</center>
+
+		<br><br><br>
+
+		Hotkeys:
+		<ul>
+			<li><b>c</b>: toggle coarse classification</li>
+			<li><b>0 - 4</b>: select fine classification</li>
+			<li><b>left</b>: save and go to previous example</li>
+			<li><b>right</b>: save and go to next example</li>
+		</ul>
+	</body>
+	<script>
+		function toggle_modified() {
+			let modified = document.getElementById('modified');
+		    modified.value = 1;
+		}
+
+		// non-hotkey functionality: set 'modified' field on selection change
+		document.getElementById('layer1').addEventListener('change', toggle_modified);
+		document.getElementById('layer2').addEventListener('change', toggle_modified);
+
+		// hotkeys
+		function select_value(id, valueToSelect) {    
+		    let element = document.getElementById(id);
+		    element.value = valueToSelect;
+		    toggle_modified();
+		}
+
+		function toggle_value(id) {    
+		    let element = document.getElementById(id);
+		    var element_options = element.options;
+		    for (var opt, j = 0; opt = element_options[j]; j++) {
+		    	if (opt.value != element.value) {
+				    element.value = opt.value;
+				    break;
+				}
+			}
+		    toggle_modified();
+		}
+
+		Mousetrap.bind('c', function() { toggle_value('layer1'); });
+		Mousetrap.bind('0', function() { select_value('layer2', 'negative'); });
+		Mousetrap.bind('1', function() { select_value('layer2', 'positive 1'); });
+		Mousetrap.bind('2', function() { select_value('layer2', 'positive 2'); });
+		Mousetrap.bind('3', function() { select_value('layer2', 'positive 3'); });
+		Mousetrap.bind('4', function() { select_value('layer2', 'positive 4'); });
+		Mousetrap.bind('right', function() { document.getElementById('submit_next').click(); }); 
+		Mousetrap.bind('left', function() { document.getElementById('submit_previous').click(); });
+	</script>
+</html>
