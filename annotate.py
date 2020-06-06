@@ -75,6 +75,7 @@ def index():
 
 		return render_template('annotate.html', filename=DATA_PATH, form=form, line_no=line_no, text=tweet_text, data_len=data_len)
 
+# optional: serve the js file
 @app.route('/mousetrap.min.js')
 def send_js():
 	return send_from_directory('.', 'mousetrap.min.js')
