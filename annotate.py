@@ -15,13 +15,13 @@ app.config['WTF_CSRF_ENABLED'] = False
 
 # annotation form
 layer1_labels = [('class_0', 'negative'), ('class_1', 'positive')]
-layer2_labels = [('class_0', 'negative'), ('class_1', 'positive 1'), ('class_2', 'positive 2'), ('class_3', 'positive 3'), ('class_4', 'positive 4')]
+layer2_labels = [('class_0', 'class 0'), ('class_1', 'class 1'), ('class_2', 'class 2'), ('class_3', 'class 3'), ('class_4', 'class 4')]
 
 class AnnotateForm(FlaskForm):
 	layer1 = SelectField('Coarse', choices=layer1_labels, id='layer1', coerce=str)
 	layer2 = SelectField('Fine', choices=layer2_labels, id='layer2', coerce=str)
-	tweet_id = HiddenField(label=None)
-	tweet_text = HiddenField(label=None)
+	id = HiddenField(label=None)
+	text = HiddenField(label=None)
 	line_no = HiddenField(label=None)
 	line_orig = HiddenField(label=None)
 	modified = HiddenField(label=None, id='modified')
@@ -37,7 +37,7 @@ def index():
 
 		# write line
 		if form.modified.data == '1':
-			new_text = '\t'.join([form.tweet_id.data, form.tweet_text.data, form.layer1.data.upper(), form.layer2.data.upper()])
+			new_text = '\t'.join([form.id.data, form.text.data, form.layer1.data.upper(), form.layer2.data.upper()])
 			lines = open(DATA_PATH, 'r').readlines()
 			lines[int(form.line_no.data) - 1] = new_text + '\n'
 			out = open(DATA_PATH, 'w')
@@ -63,17 +63,17 @@ def index():
 
 		# read line
 		line_orig = linecache.getline(DATA_PATH, int(line_no))
-		tweet_id, tweet_text, label1, label2 = line_orig.strip().split('\t')
+		id, text, label1, label2 = line_orig.strip().split('\t')
 
 		# set form fields
 		form.layer1.data = label1.lower()
 		form.layer2.data = label2.lower()		
-		form.tweet_id.data = tweet_id
-		form.tweet_text.data = tweet_text
+		form.id.data = id
+		form.text.data = text
 		form.line_no.data = line_no
 		form.line_orig.data = line_orig
 
-		return render_template('annotate.html', filename=DATA_PATH, form=form, line_no=line_no, text=tweet_text, data_len=data_len)
+		return render_template('annotate.html', filename=DATA_PATH, form=form, line_no=line_no, text=text, data_len=data_len)
 
 # optional: serve the js file
 @app.route('/mousetrap.min.js')
