@@ -10,12 +10,11 @@ This can easily be adapted by changing the SelectFields in the Python and in the
 ##  run
 
 - ```pip install flask flask-wtf```
-- ```FLASK_APP=annotate.py flask run```
+- ```FLASK_APP=annotate.py flask run``` (add ```--host=0.0.0.0``` to serve on all interfaces)
 - open in browser: ```http://127.0.0.1:5000```
 - go to specific example: ```http://127.0.0.1:5000/?line=12```
 
 ## limitations
 
-- performance: ok for files < 100k lines
-- not for production: form fields lack csrf protection
-- no multiuser: concurrent file writing not implemented
+- good for local use, single-user operation, files < 100k lines
+
