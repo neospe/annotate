@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, HiddenField
 import linecache
 
-DATA_PATH = '/home/user/data.tsv'
+DATA_PATH = 'data.tsv'
 
 data_len = sum(1 for line in open(DATA_PATH))
 
