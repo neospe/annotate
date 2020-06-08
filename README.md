@@ -5,9 +5,9 @@ Simple text annotation tool.
 
 ![screenshot](screen.png)
 
-Has a minimal, keyboard-based UI for text labeling along multiple dimensions. Assumes a TSV (tab-separated values) file, where each line consists of one example followed by two labels, each separated by a tab. Like this: text ```<tab>``` label ```<tab>``` label
+Minimal, keyboard-based UI for text labeling along multiple dimensions. Assumes a TSV (tab-separated values) file, where each line consists of one example followed by two labels, each separated by a tab. Like this: id ```<tab>``` text ```<tab>``` label ```<tab>``` label
 
-This can easily be adapted by changing the SelectFields in the Python and in the HTML file. It uses mousetrap.js for keyboard shortcuts, which can be changed at the end of the HTML template.
+Can easily be adapted by changing the SelectFields in the Python and in the HTML file. Uses mousetrap.js for keyboard shortcuts, which can be changed at the end of the HTML template.
 
 ##  run
 
